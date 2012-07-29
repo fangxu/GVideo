@@ -149,14 +149,14 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView listView;
+        public System.Windows.Forms.ListView listView;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.Button buttonRemove;
-        private System.Windows.Forms.TextBox textBoxOutput;
+        public System.Windows.Forms.TextBox textBoxOutput;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonOpen;
-        private System.Windows.Forms.TextBox textBoxOptions;
+        public System.Windows.Forms.TextBox textBoxOptions;
         private System.Windows.Forms.Label label2;
     }
 }
