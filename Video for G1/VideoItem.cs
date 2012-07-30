@@ -13,6 +13,13 @@ namespace Video_for_G1
         error,
     }
 
+    public enum AfterDone
+    {
+        nothing,
+        close,
+        shutdown
+    }
+
     public class VideoItem
     {
         private String name;

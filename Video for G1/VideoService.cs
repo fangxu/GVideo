@@ -17,10 +17,10 @@ namespace Video_for_G1
         Thread thread;
         String options, output;
         //Thread thread ;
-        
+
 
         public void encode()
-        {            
+        {
             foreach (VideoItem v in videoItems)
             {
                 if (v.getStatus() != Status.waitting) continue;
@@ -32,7 +32,7 @@ namespace Video_for_G1
                 ph = ph.Substring(0, ph.LastIndexOf('\\') + 1);
                 if (ph[0] == '"')
                     ph = ph.Substring(1);
-                FileService.createBat(path, ph, options, output);  
+                FileService.createBat(path, ph, options, output);
 
                 Process p = new Process();
                 p.StartInfo.FileName = "\"" + ph + "temp.bat\"";
@@ -49,6 +49,7 @@ namespace Video_for_G1
                 freshListView();
             }
             changeTitle("Video for G1");
+            afterDone();
         }
 
         private void Output(object sendProcess, DataReceivedEventArgs output)
@@ -133,12 +134,32 @@ namespace Video_for_G1
             }));
         }
 
+        public void afterDone()
+        {
+            switch (form.afterDone)
+            {
+                case AfterDone.nothing:
+                    break;
+                case AfterDone.close:
+                    Environment.Exit(0);
+                    break;
+                case AfterDone.shutdown:
+                    Process bootProcess = new Process();
+                    bootProcess.StartInfo.FileName = "shutdown";
+                    bootProcess.StartInfo.Arguments = "/s";
+                    bootProcess.Start();
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public void stopEncode()
         {
-//             if (thread.ThreadState==System.Threading.ThreadState.Running)
-//             {
-                //thread.Abort();
-           /* } */          
+            //             if (thread.ThreadState==System.Threading.ThreadState.Running)
+            //             {
+            //thread.Abort();
+            /* } */
         }
     }
 

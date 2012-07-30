@@ -15,13 +15,17 @@ namespace Video_for_G1
 {
     public partial class FormMain : Form
     {
-
+        public AfterDone afterDone;
         VideoService vs;
         public FormMain()
         {
             InitializeComponent();
             FileService.checkExe();
-
+            checkBoxTop.Checked = true;
+            this.TopMost = true;
+            comboBoxAfterDone.Items.AddRange(new String[] {
+                AfterDone.nothing.ToString(),AfterDone.close.ToString(),AfterDone.shutdown.ToString() });
+            comboBoxAfterDone.SelectedIndex = 0;
             vs = new VideoService(this);//add Columns  "file" and "status"                      
         }
 
@@ -73,6 +77,11 @@ namespace Video_for_G1
         private void buttonStart_Click(object sender, EventArgs e)
         {
             vs.startEncode();
+        }
+
+        private void checkBoxTop_CheckedChanged(object sender, EventArgs e)
+        {
+            this.TopMost = checkBoxTop.Checked;
         }        
 
         /*private void changeStatue(int i, string s)

@@ -37,6 +37,9 @@
             this.buttonOpen = new System.Windows.Forms.Button();
             this.textBoxOptions = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.comboBoxAfterDone = new System.Windows.Forms.ComboBox();
+            this.checkBoxTop = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listView
@@ -61,7 +64,7 @@
             // 
             // buttonClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(113, 223);
+            this.buttonClear.Location = new System.Drawing.Point(94, 223);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(75, 23);
             this.buttonClear.TabIndex = 2;
@@ -71,7 +74,7 @@
             // 
             // buttonRemove
             // 
-            this.buttonRemove.Location = new System.Drawing.Point(213, 223);
+            this.buttonRemove.Location = new System.Drawing.Point(175, 223);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(75, 23);
             this.buttonRemove.TabIndex = 3;
@@ -123,12 +126,44 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "Options:";
             // 
+            // comboBoxAfterDone
+            // 
+            this.comboBoxAfterDone.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAfterDone.FormattingEnabled = true;
+            this.comboBoxAfterDone.Location = new System.Drawing.Point(336, 224);
+            this.comboBoxAfterDone.Name = "comboBoxAfterDone";
+            this.comboBoxAfterDone.Size = new System.Drawing.Size(121, 20);
+            this.comboBoxAfterDone.TabIndex = 9;
+            // 
+            // checkBoxTop
+            // 
+            this.checkBoxTop.AutoSize = true;
+            this.checkBoxTop.Location = new System.Drawing.Point(463, 226);
+            this.checkBoxTop.Name = "checkBoxTop";
+            this.checkBoxTop.Size = new System.Drawing.Size(42, 16);
+            this.checkBoxTop.TabIndex = 10;
+            this.checkBoxTop.Text = "Top";
+            this.checkBoxTop.UseVisualStyleBackColor = true;
+            this.checkBoxTop.CheckedChanged += new System.EventHandler(this.checkBoxTop_CheckedChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(265, 228);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "AfterDone:";
+            // 
             // FormMain
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(517, 307);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.checkBoxTop);
+            this.Controls.Add(this.comboBoxAfterDone);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBoxOptions);
             this.Controls.Add(this.buttonOpen);
@@ -158,6 +193,9 @@
         private System.Windows.Forms.Button buttonOpen;
         public System.Windows.Forms.TextBox textBoxOptions;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBoxAfterDone;
+        private System.Windows.Forms.CheckBox checkBoxTop;
+        private System.Windows.Forms.Label label3;
     }
 }
 
