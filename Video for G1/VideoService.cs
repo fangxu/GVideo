@@ -49,7 +49,7 @@ namespace Video_for_G1
                 freshListView();
             }
             changeTitle("Video for G1");
-            afterDone();
+            //afterDone();
         }
 
         private void Output(object sendProcess, DataReceivedEventArgs output)
@@ -134,7 +134,7 @@ namespace Video_for_G1
             }));
         }
 
-        public void afterDone()
+        /*public void afterDone()
         {
             switch (form.afterDone)
             {
@@ -152,7 +152,7 @@ namespace Video_for_G1
                 default:
                     break;
             }
-        }
+        }*/
 
         public void stopEncode()
         {
@@ -163,19 +163,5 @@ namespace Video_for_G1
         }
     }
 
-    public class SynonymComparer : IEqualityComparer<VideoItem>
-    {
-        public bool Equals(VideoItem one, VideoItem two)
-        {
-            // Adjust according to requirements
-            return String.Equals(one.getName(), two.getName());
-
-        }
-
-        public int GetHashCode(VideoItem item)
-        {
-            return StringComparer.CurrentCulture.GetHashCode(item.getName());
-
-        }
-    }
+    
 }

@@ -15,9 +15,9 @@ namespace Video_for_G1
 
     public enum AfterDone
     {
-        nothing,
-        close,
-        shutdown
+        nothing = 0,
+        close = 1,
+        shutdown = 2
     }
 
     public class VideoItem
@@ -47,17 +47,17 @@ namespace Video_for_G1
         }
 
         public VideoItem(String path)
-        {            
+        {
             if (path.Contains('\\'))
             {
                 this.path = path;
                 this.name = path.Substring(path.LastIndexOf('\\') + 1, path.Length - path.LastIndexOf('\\') - 1);
-            } 
+            }
             else
             {
                 this.name = path;
             }
-            
+
         }
     }
 }

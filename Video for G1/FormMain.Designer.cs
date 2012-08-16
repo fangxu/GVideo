@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.listView = new System.Windows.Forms.ListView();
             this.buttonStart = new System.Windows.Forms.Button();
             this.buttonClear = new System.Windows.Forms.Button();
@@ -40,6 +41,7 @@
             this.comboBoxAfterDone = new System.Windows.Forms.ComboBox();
             this.checkBoxTop = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.buttonHelp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView
@@ -112,7 +114,7 @@
             // 
             this.textBoxOptions.Location = new System.Drawing.Point(65, 278);
             this.textBoxOptions.Name = "textBoxOptions";
-            this.textBoxOptions.Size = new System.Drawing.Size(440, 21);
+            this.textBoxOptions.Size = new System.Drawing.Size(352, 21);
             this.textBoxOptions.TabIndex = 7;
             this.textBoxOptions.Text = "--profile baseline --level 3 --tune animation --crf 23 --vbv-bufsize 2500 --vbv-m" +
                 "axrate 2500 --vf resize:480,320,,both,,spline";
@@ -134,6 +136,7 @@
             this.comboBoxAfterDone.Name = "comboBoxAfterDone";
             this.comboBoxAfterDone.Size = new System.Drawing.Size(121, 20);
             this.comboBoxAfterDone.TabIndex = 9;
+            this.comboBoxAfterDone.SelectedIndexChanged += new System.EventHandler(this.comboBoxAfterDone_SelectedIndexChanged);
             // 
             // checkBoxTop
             // 
@@ -155,12 +158,23 @@
             this.label3.TabIndex = 11;
             this.label3.Text = "AfterDone:";
             // 
+            // buttonHelp
+            // 
+            this.buttonHelp.Location = new System.Drawing.Point(430, 278);
+            this.buttonHelp.Name = "buttonHelp";
+            this.buttonHelp.Size = new System.Drawing.Size(75, 23);
+            this.buttonHelp.TabIndex = 12;
+            this.buttonHelp.Text = "Help";
+            this.buttonHelp.UseVisualStyleBackColor = true;
+            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
+            // 
             // FormMain
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(517, 307);
+            this.Controls.Add(this.buttonHelp);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.checkBoxTop);
             this.Controls.Add(this.comboBoxAfterDone);
@@ -173,6 +187,7 @@
             this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.listView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
             this.Text = "Video for G1";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FormMain_DragDrop);
@@ -196,6 +211,7 @@
         private System.Windows.Forms.ComboBox comboBoxAfterDone;
         private System.Windows.Forms.CheckBox checkBoxTop;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button buttonHelp;
     }
 }
 
