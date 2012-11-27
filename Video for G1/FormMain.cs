@@ -13,42 +13,42 @@ using System.Diagnostics;
 
 namespace Video_for_G1
 {
-    public partial class FormMain : Form, iVideoView
+    public partial class FormMain : Form
     {
-        private static iVideoModel Model = new VideoModel();
-        private iVideoControl Control = new VideoControl();
-        public String statu;
+        //Video项目
+        HashSet<VideoItem> videos;
+        //压制完成后的动作
+        AfterDone afterDone;
 
-        
-        //VideoService vs;
         public FormMain()
         {
+            //初始化数据
+            videos = new HashSet<VideoItem>(new SynonymComparer());
+            afterDone = AfterDone.nothing;
             InitializeComponent();
+            //检查x264.exe,ffmpeg.exe,neroaacenc.exe三个文件是否存在
             FileService.checkExe();
+            //默认置顶
             checkBoxTop.Checked = true;
             this.TopMost = true;
+            //添加完成后选项，默认nothing
             comboBoxAfterDone.Items.AddRange(new String[] {
                 AfterDone.nothing.ToString(),AfterDone.close.ToString(),AfterDone.shutdown.ToString() });
             comboBoxAfterDone.SelectedIndex = 0;
-            //vs = new VideoService(this);//add Columns  "file" and "status"                      
-
-
-
-            if (Model != null)
-            {
-                Model.removeObserver(this);
-            }
-            Control.setView(this);
-            Control.setModel(Model);
-            Model.addObserver(this);
         }
 
+        /************************************************************************/
+        /* 视频文件拖入窗体                                                     */
+        /************************************************************************/
         private void FormMain_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 e.Effect = DragDropEffects.Copy;
         }
 
+        /************************************************************************/
+        /* 视频文件在窗体内释放，添加到videos中                                 */
+        /************************************************************************/
         private void FormMain_DragDrop(object sender, DragEventArgs e)
         {
             string[] stringTemp = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -56,14 +56,66 @@ namespace Video_for_G1
             {
                 textBoxOutput.Text = stringTemp[0].Substring(0, stringTemp[0].LastIndexOf('\\'));
             }
-            Control.addVideos(stringTemp);
+            for (int i = 0; i < stringTemp.Length; i++)
+            {
+                videos.Add(new VideoItem(stringTemp[i]));
+            }
+            updateListView();
         }
 
+        /************************************************************************/
+        /* 刷新列表                                                             */
+        /************************************************************************/
+        public void updateListView()
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new MethodInvoker(() =>
+                {
+                    listView.Items.Clear();
+                    foreach (VideoItem vi in videos)
+                    {
+                        ListViewItem it = new ListViewItem();
+                        it.Text = vi.getName();
+                        it.SubItems.Add(vi.getStatus().ToString());
+                        listView.Items.Add(it);
+                    }
+                    if (videos.Count != 0)
+                    {
+                        listView.Columns[0].Width = -1;
+                    }
+                }));
+            }
+            else
+            {
+                listView.Items.Clear();
+                foreach (VideoItem vi in videos)
+                {
+                    ListViewItem it = new ListViewItem();
+                    it.Text = vi.getName();
+                    it.SubItems.Add(vi.getStatus().ToString());
+                    listView.Items.Add(it);
+                }
+                if (videos.Count != 0)
+                {
+                    listView.Columns[0].Width = -1;
+                }
+            }
+
+        }
+
+        /************************************************************************/
+        /* 清空按钮响应                                                         */
+        /************************************************************************/
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            Control.clearVideo();
+            videos.Clear();
+            updateListView();
         }
 
+        /************************************************************************/
+        /* 打开按钮响应，选择输出目录                                           */
+        /************************************************************************/
         private void buttonOpen_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dlg = new FolderBrowserDialog();
@@ -77,71 +129,144 @@ namespace Video_for_G1
             }
         }
 
+        /************************************************************************/
+        /* 清空按钮响应                                                         */
+        /************************************************************************/
         private void buttonRemove_Click(object sender, EventArgs e)
         {
             int n = listView.SelectedItems.Count;
-            String[] selectItems = new String[n];
+            String selected = null;
             for (int i = 0; i < n; i++)
             {
-                selectItems[i] = listView.SelectedItems[i].Text;
+                selected = listView.SelectedItems[i].Text;
+                videos.Remove(new VideoItem(selected));
             }
-            Control.removeVideos(selectItems);
+            updateListView();
         }
 
+        /************************************************************************/
+        /* 开始按钮响应，开始压制                                               */
+        /************************************************************************/
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            Control.encode(this.textBoxOptions.Text, this.textBoxOutput.Text);
+            String options, output;
+            options = textBoxOptions.Text;
+            output = textBoxOutput.Text;
+            VideoItem v = null;
+
+            Thread t = new Thread(() =>
+            {
+                for (; ; )
+                {
+                    v = videos.FirstOrDefault(x => x.getStatus() == Status.waitting);
+                    if (v == null)
+                    {
+                        break;
+                    }
+                    v.setStatus(Status.processing);
+                    updateListView();
+
+                    FileService.createBat(v.getPath(), options, output);
+                    Process p = new Process();
+                    p.StartInfo.FileName = "\"" + Global.batPh + "\"";
+                    p.StartInfo.RedirectStandardError = true;
+                    p.ErrorDataReceived += new DataReceivedEventHandler(Output);
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.CreateNoWindow = true;
+                    p.Start();
+                    p.BeginErrorReadLine();
+                    p.WaitForExit();
+                    p.Close();
+                    p.Dispose();
+                    v.setStatus(Status.done);
+                    updateListView();
+                }
+                changeTitle("Video for G1");
+                afterEncode();
+            });
+            t.IsBackground = true;
+            t.Start();
         }
 
+        /************************************************************************/
+        /* 完成后动作判断                                                       */
+        /************************************************************************/
+        private void afterEncode()
+        {
+            switch (afterDone)
+            {
+                case AfterDone.nothing:
+                    break;
+                case AfterDone.close:
+                    Environment.Exit(0);
+                    break;
+                case AfterDone.shutdown:
+                    Process bootProcess = new Process();
+                    bootProcess.StartInfo.FileName = "shutdown";
+                    bootProcess.StartInfo.Arguments = "/s";
+                    bootProcess.Start();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /************************************************************************/
+        /* 异步显示压制信息                                                     */
+        /************************************************************************/
+        private void Output(object sendProcess, DataReceivedEventArgs output)
+        {
+            if (String.IsNullOrEmpty(output.Data)) return;
+            changeTitle(output.Data);
+        }
+
+        /************************************************************************/
+        /* 置顶选项选择响应                                                     */
+        /************************************************************************/
         private void checkBoxTop_CheckedChanged(object sender, EventArgs e)
         {
             this.TopMost = checkBoxTop.Checked;
         }
 
+        /************************************************************************/
+        /* 完成后选项选择响应                                                   */
+        /************************************************************************/
         private void comboBoxAfterDone_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Model.setAfterDone((AfterDone)comboBoxAfterDone.SelectedIndex);
+            afterDone = (AfterDone)comboBoxAfterDone.SelectedIndex;
         }
 
-        public void updateView()
-        {
-            this.BeginInvoke(new MethodInvoker(() =>
-            {
-                listView.Clear();
-                listView.Columns.Add("file", -2, HorizontalAlignment.Left);
-                listView.Columns.Add("statue", -2, HorizontalAlignment.Left);
-                HashSet<VideoItem> videos = Model.getVideos();
-                foreach (VideoItem vi in videos)
-                {
-                    ListViewItem it = new ListViewItem();
-                    it.Text = vi.getName();
-                    it.SubItems.Add(vi.getStatus().ToString());
-                    listView.Items.Add(it);
-                }
-                if (videos.Count != 0)
-                {
-                    listView.Columns[0].Width = -1;
-                    listView.Columns[1].Width = -1;
-                }
-            }));
-        }
-
+        /************************************************************************/
+        /* 更改窗体标题，用于显示压制信息                                       */
+        /************************************************************************/
         public void changeTitle(String title)
         {
 
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new MethodInvoker(() =>
+                            {
+                                this.Text = title;
 
-            this.BeginInvoke(new MethodInvoker(() =>
+                            }));
+            }
+            else
             {
                 this.Text = title;
-                //this.Text = statu;
-
-            }));
-
+            }
         }
 
+        /************************************************************************/
+        /* 帮助按钮响应，弹出帮助窗口                                           */
+        /************************************************************************/
         private void buttonHelp_Click(object sender, EventArgs e)
         {
             new Help().Show();
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            FileService.deleteBat();
         }
     }
 }
