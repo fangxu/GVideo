@@ -52,6 +52,7 @@
             this.columnHeader1,
             this.columnHeader2});
             this.listView.Dock = System.Windows.Forms.DockStyle.Top;
+            this.listView.FullRowSelect = true;
             this.listView.GridLines = true;
             this.listView.Location = new System.Drawing.Point(0, 0);
             this.listView.Name = "listView";
