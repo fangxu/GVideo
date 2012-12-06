@@ -27,7 +27,8 @@ namespace Video_for_G1
 
         public static void createBat(String pathFile, String options, String output)
         {
-            String pathName = " \"" + output + pathFile.Substring(pathFile.LastIndexOf('\\'), pathFile.LastIndexOf('.') - pathFile.LastIndexOf('\\'));
+            String pathName = " \"" + output + pathFile.Substring(pathFile.LastIndexOf('\\'),
+                pathFile.LastIndexOf('.') - pathFile.LastIndexOf('\\'));
             string vo = pathName + "_v.mp4\" ";
             string ao = pathName + "_a.m4a\" ";
             string avo = pathName + "_enc.mp4\" ";

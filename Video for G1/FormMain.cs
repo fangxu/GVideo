@@ -121,11 +121,12 @@ namespace Video_for_G1
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                textBoxOutput.Text = dlg.SelectedPath;
-            }
-            else
-            {
-                return;
+                String outPath = dlg.SelectedPath;
+                if (outPath.EndsWith("\\"))
+                {
+                    outPath = outPath.Substring(0, outPath.Length - 1);
+                }
+                textBoxOutput.Text = outPath;
             }
         }
 
