@@ -19,7 +19,7 @@ namespace Video_for_G1
         HashSet<VideoItem> videos;
         //压制完成后的动作
         AfterDone afterDone;
-
+        //--profile baseline --level 3 --tune animation --crf 23 --vbv-bufsize 2500 --vbv-maxrate 2500 --vf resize:480,320,,both,,spline
         public FormMain()
         {
             //初始化数据
@@ -262,12 +262,18 @@ namespace Video_for_G1
         /************************************************************************/
         private void buttonHelp_Click(object sender, EventArgs e)
         {
-            new Help().Show();
+            new HelpX264().Show();
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             FileService.deleteBat();
         }
+
+        private void buttonBat_Click(object sender, EventArgs e)
+        {
+            new Bat().Show();
+        }
+
     }
 }

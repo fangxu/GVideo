@@ -38,12 +38,14 @@
             this.textBoxOutput = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonOpen = new System.Windows.Forms.Button();
-            this.textBoxOptions = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxAfterDone = new System.Windows.Forms.ComboBox();
             this.checkBoxTop = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonHelp = new System.Windows.Forms.Button();
+            this.textBoxOptions = new System.Windows.Forms.TextBox();
+            this.buttonBat = new System.Windows.Forms.Button();
+            this.buttonExtract = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView
@@ -126,15 +128,6 @@
             this.buttonOpen.UseVisualStyleBackColor = true;
             this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
             // 
-            // textBoxOptions
-            // 
-            this.textBoxOptions.Location = new System.Drawing.Point(65, 278);
-            this.textBoxOptions.Name = "textBoxOptions";
-            this.textBoxOptions.Size = new System.Drawing.Size(352, 21);
-            this.textBoxOptions.TabIndex = 7;
-            this.textBoxOptions.Text = "--profile baseline --level 3 --tune animation --crf 23 --vbv-bufsize 2500 --vbv-m" +
-                "axrate 2500 --vf resize:480,320,,both,,spline";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -176,13 +169,40 @@
             // 
             // buttonHelp
             // 
-            this.buttonHelp.Location = new System.Drawing.Point(430, 278);
+            this.buttonHelp.Location = new System.Drawing.Point(242, 276);
             this.buttonHelp.Name = "buttonHelp";
             this.buttonHelp.Size = new System.Drawing.Size(75, 23);
             this.buttonHelp.TabIndex = 12;
-            this.buttonHelp.Text = "Help";
+            this.buttonHelp.Text = "HelpX264";
             this.buttonHelp.UseVisualStyleBackColor = true;
             this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
+            // 
+            // textBoxOptions
+            // 
+            this.textBoxOptions.Location = new System.Drawing.Point(65, 278);
+            this.textBoxOptions.Name = "textBoxOptions";
+            this.textBoxOptions.Size = new System.Drawing.Size(159, 21);
+            this.textBoxOptions.TabIndex = 7;
+            this.textBoxOptions.Text = "--tune animation --crf 23";
+            // 
+            // buttonBat
+            // 
+            this.buttonBat.Location = new System.Drawing.Point(430, 276);
+            this.buttonBat.Name = "buttonBat";
+            this.buttonBat.Size = new System.Drawing.Size(75, 23);
+            this.buttonBat.TabIndex = 13;
+            this.buttonBat.Text = "Bat";
+            this.buttonBat.UseVisualStyleBackColor = true;
+            this.buttonBat.Click += new System.EventHandler(this.buttonBat_Click);
+            // 
+            // buttonExtract
+            // 
+            this.buttonExtract.Location = new System.Drawing.Point(336, 276);
+            this.buttonExtract.Name = "buttonExtract";
+            this.buttonExtract.Size = new System.Drawing.Size(75, 23);
+            this.buttonExtract.TabIndex = 14;
+            this.buttonExtract.Text = "Extract";
+            this.buttonExtract.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -190,6 +210,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(517, 307);
+            this.Controls.Add(this.buttonExtract);
+            this.Controls.Add(this.buttonBat);
             this.Controls.Add(this.buttonHelp);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.checkBoxTop);
@@ -223,7 +245,6 @@
         public System.Windows.Forms.TextBox textBoxOutput;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonOpen;
-        public System.Windows.Forms.TextBox textBoxOptions;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxAfterDone;
         private System.Windows.Forms.CheckBox checkBoxTop;
@@ -231,6 +252,9 @@
         private System.Windows.Forms.Button buttonHelp;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        public System.Windows.Forms.TextBox textBoxOptions;
+        private System.Windows.Forms.Button buttonBat;
+        private System.Windows.Forms.Button buttonExtract;
     }
 }
 

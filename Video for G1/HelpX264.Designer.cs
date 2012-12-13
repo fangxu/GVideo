@@ -1,6 +1,6 @@
 ﻿namespace Video_for_G1
 {
-    partial class Help
+    partial class HelpX264
     {
         /// <summary>
         /// Required designer variable.

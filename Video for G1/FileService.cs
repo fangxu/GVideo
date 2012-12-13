@@ -25,6 +25,7 @@ namespace Video_for_G1
             }
         }
 
+        //--tune animation --crf 23
         public static void createBat(String pathFile, String options, String output)
         {
             String pathName = " \"" + output + pathFile.Substring(pathFile.LastIndexOf('\\'),
@@ -40,7 +41,8 @@ namespace Video_for_G1
             }
 
             StringBuilder sBuilder = new StringBuilder();
-            sBuilder.AppendLine("x264 " + options + " -o " + vo + vi);
+            sBuilder.AppendLine("x264 --profile baseline --level 3 " + options
+                + " --vbv-bufsize 2500 --vbv-maxrate 2500 --vf resize:480,320,,both,,spline -o " + vo + vi);
             sBuilder.AppendLine("ffmpeg -i " + vi + " -f wav - | neroaacenc -q 0.28 -if - -ignorelength -of " + ao);
             sBuilder.AppendLine("ffmpeg -i " + vo + " -i " + ao + " -vcodec copy -acodec copy " + avo);
             sBuilder.AppendLine("del " + vo);

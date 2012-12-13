@@ -11,10 +11,10 @@ using System.Diagnostics;
 
 namespace Video_for_G1
 {
-    public partial class Help : Form
+    public partial class HelpX264 : Form
     {
         private StringBuilder sb = null;
-        public Help()
+        public HelpX264()
         {
             sb = new StringBuilder();
             InitializeComponent();
