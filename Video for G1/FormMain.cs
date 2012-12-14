@@ -275,5 +275,10 @@ namespace Video_for_G1
             new Bat().Show();
         }
 
+        private void buttonExtract_Click(object sender, EventArgs e)
+        {
+            new Extract().Show();
+        }
+
     }
 }

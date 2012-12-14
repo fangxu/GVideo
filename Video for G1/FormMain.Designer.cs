@@ -203,6 +203,7 @@
             this.buttonExtract.TabIndex = 14;
             this.buttonExtract.Text = "Extract";
             this.buttonExtract.UseVisualStyleBackColor = true;
+            this.buttonExtract.Click += new System.EventHandler(this.buttonExtract_Click);
             // 
             // FormMain
             // 

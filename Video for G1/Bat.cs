@@ -38,8 +38,8 @@ namespace Video_for_G1
             {
                 return;
             }
-            String[] vParts = SplitFilePathName(file);
-            String[] sParts = SplitFilePathName(subtitle);
+            String[] vParts = Global.SplitFilePathName(file);
+            String[] sParts = Global.SplitFilePathName(subtitle);
 
             String avsArgs = textBoxAvsArgs.Text;
             String lancResize = textBoxResize.Text;
@@ -72,7 +72,7 @@ namespace Video_for_G1
                 audioFile = textBoxAudio.Text;
             }
 
-            String[] aParts = SplitFilePathName(audioFile);
+            String[] aParts = Global.SplitFilePathName(audioFile);
             String q = textBoxQ.Text;
 
             using (FileStream fs = new FileStream(Global.ph + vParts[1] + vParts[2] + "_m4a.bat", FileMode.Create))
@@ -101,23 +101,6 @@ namespace Video_for_G1
                     }
                 }
             }
-        }
-
-        private String[] SplitFilePathName(String fileString)
-        {
-            String[] result = new String[4];
-            Match m = Regex.Match(fileString, @"([\s\S]+\\)([\s\S]*?\[)\d{2}(][\s\S]*?)(\.[\S]*)$");
-            if (!m.Success)
-            {
-                return null;
-            }
-            result[0] = m.Groups[1].Value;
-            result[1] = m.Groups[2].Value;
-            result[2] = m.Groups[3].Value;
-            result[3] = m.Groups[4].Value;
-            return result;
-        }
-
-
+        }  
     }
 }
