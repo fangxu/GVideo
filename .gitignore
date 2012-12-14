@@ -1,4 +1,8 @@
 bin
 *.suo
 obj
+TestProject1
+TestResults
 *.exe
+*.vsmdi
+*.testsettings

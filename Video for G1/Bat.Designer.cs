@@ -33,7 +33,6 @@
             this.buttonCreate = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.textBoxSubtitle = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxAudio = new System.Windows.Forms.TextBox();
@@ -46,6 +45,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.checkBoxHasAudio = new System.Windows.Forms.CheckBox();
             this.checkBoxHasSubtitle = new System.Windows.Forms.CheckBox();
+            this.textBoxQ = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -98,15 +99,6 @@
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 4;
             this.label2.Text = "Numbers:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(348, 34);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 12);
-            this.label3.TabIndex = 5;
-            this.label3.Text = " [01] -> [##] ";
             // 
             // textBoxSubtitle
             // 
@@ -177,7 +169,7 @@
             // 
             // textBoxResize
             // 
-            this.textBoxResize.Location = new System.Drawing.Point(229, 31);
+            this.textBoxResize.Location = new System.Drawing.Point(219, 31);
             this.textBoxResize.Name = "textBoxResize";
             this.textBoxResize.Size = new System.Drawing.Size(86, 21);
             this.textBoxResize.TabIndex = 16;
@@ -186,7 +178,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(140, 35);
+            this.label8.Location = new System.Drawing.Point(130, 35);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(83, 12);
             this.label8.TabIndex = 15;
@@ -210,12 +202,31 @@
             this.checkBoxHasSubtitle.TabIndex = 18;
             this.checkBoxHasSubtitle.UseVisualStyleBackColor = true;
             // 
+            // textBoxQ
+            // 
+            this.textBoxQ.Location = new System.Drawing.Point(346, 31);
+            this.textBoxQ.Name = "textBoxQ";
+            this.textBoxQ.Size = new System.Drawing.Size(64, 21);
+            this.textBoxQ.TabIndex = 20;
+            this.textBoxQ.Text = "0.28";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(323, 34);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(17, 12);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "q:";
+            // 
             // Bat
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(449, 211);
+            this.Controls.Add(this.textBoxQ);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.checkBoxHasSubtitle);
             this.Controls.Add(this.checkBoxHasAudio);
             this.Controls.Add(this.textBoxResize);
@@ -228,7 +239,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBoxSubtitle);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.buttonCreate);
@@ -249,7 +259,6 @@
         private System.Windows.Forms.Button buttonCreate;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxSubtitle;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBoxAudio;
@@ -262,5 +271,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox checkBoxHasAudio;
         private System.Windows.Forms.CheckBox checkBoxHasSubtitle;
+        private System.Windows.Forms.TextBox textBoxQ;
+        private System.Windows.Forms.Label label3;
     }
 }
