@@ -232,6 +232,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FormMain_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FormMain_DragEnter);
+            this.Move += new System.EventHandler(this.FormMain_Move);
             this.ResumeLayout(false);
             this.PerformLayout();
 

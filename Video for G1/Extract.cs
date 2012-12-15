@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace Video_for_G1
 {
     public partial class Extract : Form
     {
         List<String> tracks;
+        String[] fileParts;
+        String progressRate;
         public Extract()
         {
             InitializeComponent();
@@ -37,17 +36,16 @@ namespace Video_for_G1
             {
                 checkedListBox1.Items.Add(s);
             }
-
+            fileParts = Global.SplitFilePathName(stringTemp);
         }
 
         private String[] GetFileNames(String file)
         {
-            String[] nameParts = Global.SplitFilePathName(file);
             int num = (int)numericUpDown1.Value;
             String[] fileNames = new String[num];
             for (int i = 1; i <= num; i++)
             {
-                fileNames[i - 1] = nameParts[0] + nameParts[1] + i.ToString("D2") + nameParts[2] + nameParts[3];
+                fileNames[i - 1] = fileParts[0] + fileParts[1] + i.ToString("D2") + fileParts[2] + fileParts[3];
             }
             return fileNames;
         }
@@ -135,12 +133,102 @@ namespace Video_for_G1
 
         private void buttonExtract_Click(object sender, EventArgs e)
         {
+            String outPath = textBoxOut.Text;
+            List<String> checkedItem = new List<String>();
+            foreach (object item in checkedListBox1.CheckedItems)
+            {
+                String track = item.ToString();
+                if (track.Contains("audio"))
+                {
+                    if (track.Contains("A_AAC"))
+                    {
+                        checkedItem.Add(track[0] + ":.aac\"");
+                    }
+                    else
+                    {
+                        checkedItem.Add(track[0] + ":.raw\"");
+                    }
 
+                }
+                else if (track.Contains("subtitles"))
+                {
+                    if (track.Contains("S_TEXT/ASS"))
+                    {
+                        checkedItem.Add(track[0] + ":.ass\"");
+                    }
+                    else if (track.Contains("S_TEXT/UTF8"))
+                    {
+                        checkedItem.Add(track[0] + ":.srt\"");
+                    }
+                    else
+                    {
+                        checkedItem.Add(track[0] + ":.raw\"");
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            int num = (int)numericUpDown1.Value;
+
+            Thread t = new Thread(() =>
+            {
+                for (int i = 1; i <= num; i++)
+                {
+                    String file = fileParts[0] + fileParts[1] + i.ToString("D2") + fileParts[2] + fileParts[3];
+                    String outTracks = " ";
+                    for (int s = 0; s < checkedItem.Count; s++)
+                    {
+                        outTracks += " " + checkedItem[s].Replace(":", ":\"" + fileParts[0]
+                            + fileParts[1] + i.ToString("D2") + fileParts[2] + "_" + s);
+                    }
+                    Process p = new Process();
+                    p.StartInfo.FileName = "\"" + Global.ph + "mkvextract.exe\"";
+                    p.StartInfo.Arguments = "tracks \"" + file + "\" " + outTracks;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.OutputDataReceived += new DataReceivedEventHandler(ExtractTracks);
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.CreateNoWindow = true;
+                    progressRate = i + "/" + num;
+                    p.Start();
+                    p.BeginOutputReadLine();
+                    p.WaitForExit();
+                    p.Close();
+                    p.Dispose();
+                }
+                ResetTitle();
+            });
+            t.IsBackground = true;
+            t.Start();
         }
 
-        private void ExtractTracks()
+        private void ResetTitle()
         {
+            changeTitle("Extract Mkv Tracks");
+        }
 
+        private void ExtractTracks(object sendProcess, DataReceivedEventArgs output)
+        {
+            if (String.IsNullOrEmpty(output.Data)) return;
+            changeTitle(progressRate + " : " + output.Data);
+            Console.WriteLine(output.Data);
+        }
+
+        private void changeTitle(string title)
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new MethodInvoker(() =>
+                {
+                    this.Text = title;
+                }));
+            }
+            else
+            {
+                this.Text = title;
+            }
         }
     }
 }

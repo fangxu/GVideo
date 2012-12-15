@@ -16,6 +16,7 @@ namespace Video_for_G1
         public Bat()
         {
             InitializeComponent();
+            textBoxVSFilter.Text = Properties.Settings.Default.Bat_VSFilter;
         }
 
         private void textBoxOne_DragEnter(object sender, DragEventArgs e)
@@ -101,6 +102,12 @@ namespace Video_for_G1
                     }
                 }
             }
-        }  
+        }
+
+        private void Bat_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Bat_VSFilter = textBoxVSFilter.Text;
+            Properties.Settings.Default.Save();
+        }
     }
 }

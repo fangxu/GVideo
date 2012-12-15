@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Bat));
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxOne = new System.Windows.Forms.TextBox();
             this.buttonCreate = new System.Windows.Forms.Button();
@@ -244,8 +245,12 @@
             this.Controls.Add(this.buttonCreate);
             this.Controls.Add(this.textBoxOne);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Bat";
+            this.ShowInTaskbar = false;
             this.Text = "Bat for AVS and Megui";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Bat_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

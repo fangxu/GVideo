@@ -19,7 +19,13 @@ namespace Video_for_G1
         HashSet<VideoItem> videos;
         //压制完成后的动作
         AfterDone afterDone;
-        //--profile baseline --level 3 --tune animation --crf 23 --vbv-bufsize 2500 --vbv-maxrate 2500 --vf resize:480,320,,both,,spline
+
+        //Extract窗口
+        Extract extract;
+
+        //Bat窗口
+        Bat bat;
+
         public FormMain()
         {
             //初始化数据
@@ -35,6 +41,13 @@ namespace Video_for_G1
             comboBoxAfterDone.Items.AddRange(new String[] {
                 AfterDone.nothing.ToString(),AfterDone.close.ToString(),AfterDone.shutdown.ToString() });
             comboBoxAfterDone.SelectedIndex = 0;
+            //使用上次的配置信息
+            textBoxOutput.Text = Properties.Settings.Default.MainForm_Output;
+            textBoxOptions.Text = Properties.Settings.Default.MainForm_Args;
+            if (textBoxOptions.Text=="")
+            {
+                textBoxOptions.Text = "--tune animation --crf 23";
+            }
         }
 
         /************************************************************************/
@@ -268,16 +281,93 @@ namespace Video_for_G1
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             FileService.deleteBat();
+            Properties.Settings.Default.MainForm_Args = textBoxOptions.Text;
+            Properties.Settings.Default.MainForm_Output = textBoxOutput.Text;
+            Properties.Settings.Default.Save();
         }
 
         private void buttonBat_Click(object sender, EventArgs e)
         {
-            new Bat().Show();
+            if (bat == null || bat.IsDisposed)
+            {
+                bat = new Bat(); 
+            }
+            if (bat.Visible)
+            {
+                bat.Close();
+                return;
+            }
+            bat.Show();
+            if (extract!=null&&extract.Visible)
+            {
+                bat.SetDesktopLocation(this.Location.X + this.Width, this.Location.Y + extract.Height);
+            }
+            else
+            {
+                bat.SetDesktopLocation(this.Location.X + this.Width, this.Location.Y);
+            }
+
         }
 
         private void buttonExtract_Click(object sender, EventArgs e)
         {
-            new Extract().Show();
+            if (extract == null || extract.IsDisposed)
+            {
+                extract = new Extract();
+            }
+            if (extract.Visible)
+            {
+                extract.Close();
+                return;
+            }
+            extract.Show();
+            if (bat!=null&&bat.Visible)
+            {
+                extract.SetDesktopLocation(this.Location.X + this.Width, this.Location.Y + bat.Height);
+            }
+            else
+            {
+                extract.SetDesktopLocation(this.Location.X + this.Width, this.Location.Y);
+            }
+        }
+
+        private void FormMain_Move(object sender, EventArgs e)
+        {
+            if (bat!=null&&bat.IsDisposed)
+            {
+                bat = null;
+            }
+            if (extract != null && extract.IsDisposed)
+            {
+                extract = null;
+            }
+            if (bat == null && extract == null)
+            {
+                return;
+            }
+            
+            Form f1, f2=null;
+            if (bat==null||extract==null)
+            {
+                f1 = bat!=null ? (Form)bat : extract;
+            }
+            else if (bat.Visible != extract.Visible)
+            {
+                f1 = bat.Visible ? (Form)bat : extract;
+                f1.SetDesktopLocation(this.Location.X + this.Width, this.Location.Y);
+            }
+            else
+            {
+                f1 = bat.Location.Y > extract.Location.Y ? (Form)extract : bat;
+                f2 = bat.Location.Y <= extract.Location.Y ? (Form)extract : bat;                
+            }
+
+            f1.SetDesktopLocation(this.Location.X + this.Width, this.Location.Y);
+            if (f2!=null)
+            {
+                f2.SetDesktopLocation(this.Location.X + this.Width, this.Location.Y + f1.Height);
+            }
+            
         }
 
     }
