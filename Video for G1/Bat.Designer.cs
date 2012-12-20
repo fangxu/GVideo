@@ -104,10 +104,13 @@
             // textBoxSubtitle
             // 
             this.textBoxSubtitle.AllowDrop = true;
+            this.textBoxSubtitle.Enabled = false;
             this.textBoxSubtitle.Location = new System.Drawing.Point(64, 114);
             this.textBoxSubtitle.Name = "textBoxSubtitle";
             this.textBoxSubtitle.Size = new System.Drawing.Size(338, 21);
             this.textBoxSubtitle.TabIndex = 8;
+            this.textBoxSubtitle.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBoxSubtitle_DragDrop);
+            this.textBoxSubtitle.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBoxSubtitle_DragEnter);
             // 
             // label4
             // 
@@ -121,10 +124,13 @@
             // textBoxAudio
             // 
             this.textBoxAudio.AllowDrop = true;
+            this.textBoxAudio.Enabled = false;
             this.textBoxAudio.Location = new System.Drawing.Point(64, 87);
             this.textBoxAudio.Name = "textBoxAudio";
             this.textBoxAudio.Size = new System.Drawing.Size(338, 21);
             this.textBoxAudio.TabIndex = 10;
+            this.textBoxAudio.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBoxAudio_DragDrop);
+            this.textBoxAudio.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBoxAudio_DragEnter);
             // 
             // label5
             // 
@@ -193,6 +199,7 @@
             this.checkBoxHasAudio.Size = new System.Drawing.Size(15, 14);
             this.checkBoxHasAudio.TabIndex = 17;
             this.checkBoxHasAudio.UseVisualStyleBackColor = true;
+            this.checkBoxHasAudio.CheckedChanged += new System.EventHandler(this.checkBoxHasAudio_CheckedChanged);
             // 
             // checkBoxHasSubtitle
             // 
@@ -202,6 +209,7 @@
             this.checkBoxHasSubtitle.Size = new System.Drawing.Size(15, 14);
             this.checkBoxHasSubtitle.TabIndex = 18;
             this.checkBoxHasSubtitle.UseVisualStyleBackColor = true;
+            this.checkBoxHasSubtitle.CheckedChanged += new System.EventHandler(this.checkBoxHasSubtitle_CheckedChanged);
             // 
             // textBoxQ
             // 
@@ -250,7 +258,7 @@
             this.Name = "Bat";
             this.ShowInTaskbar = false;
             this.Text = "Bat for AVS and Megui";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Bat_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Bat_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
