@@ -12,7 +12,7 @@ namespace Video_for_G1
     {
         static String[] exeFile = new String[] { "x264.exe", "ffmpeg.exe", "neroAacEnc.exe" };
         static String[] extractExeFile = new String[] { "mkvextract.exe", "mkvinfo.exe" };
-        public static void checkExe() {
+        public static bool checkExe() {
             for (int i = 0; i < 3; i++) {
                 string exePath = Global.ph + exeFile[i];
                 if (!File.Exists(exePath)) {
@@ -20,24 +20,26 @@ namespace Video_for_G1
                     System.Environment.Exit(0);
                 }
             }
-
+            bool hasExtract = true;
             for (int i = 0; i < 2; i++) {
                 string exePath = Global.ph + extractExeFile[i];
                 if (!File.Exists(exePath)) {
                     MessageBox.Show(extractExeFile[i] + " not exist!", "Extract can not work!");
+                    hasExtract = false;
                 }
             }
+            return hasExtract;
         }
 
         //--tune animation --crf 23
         public static void createBat(String pathFile, String options, String output) {
             String pathName = " \"" + output + pathFile.Substring(pathFile.LastIndexOf('\\'),
                 pathFile.LastIndexOf('.') - pathFile.LastIndexOf('\\'));
-            string vo = pathName + "_v.mp4\" ";
+            bool isAvs = pathFile.EndsWith(".avs");
+            string vo = pathName + (isAvs ? "" : "_v") + ".mp4\" ";
             string ao = pathName + "_a.m4a\" ";
             string avo = pathName + "_enc.mp4\" ";
             string vi = " \"" + pathFile + "\" ";
-            bool isAvs = pathFile.EndsWith(".avs");
 
             if (File.Exists(Global.batPh)) {
                 File.Delete(Global.batPh);

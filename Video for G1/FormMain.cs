@@ -281,6 +281,9 @@ namespace Video_for_G1
         /* 打开Extract窗口                                                      */
         /************************************************************************/
         private void buttonExtract_Click(object sender, EventArgs e) {
+            if (!FileService.checkExe()) {
+                return;
+            }
             if (extract == null || extract.IsDisposed) {
                 extract = new Extract();
                 extract.Owner = this;

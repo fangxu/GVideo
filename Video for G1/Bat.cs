@@ -109,7 +109,8 @@ namespace Video_for_G1
         }
 
         private void textBoxAudio_DragDrop(object sender, DragEventArgs e) {
-
+            string[] stringTemp = (string[])e.Data.GetData(DataFormats.FileDrop);
+            textBoxAudio.Text = stringTemp[0];        
         }
 
         private void textBoxSubtitle_DragEnter(object sender, DragEventArgs e) {
