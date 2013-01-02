@@ -56,8 +56,9 @@ namespace Video_for_G1
             String[] aParts = Global.SplitFilePathName(audioFile);
             String q = textBoxQ.Text;
 
-            using (FileStream fs = new FileStream(Global.ph + vParts[1] + vParts[2] + "_m4a.bat", FileMode.Create)) {
+            using (FileStream fs = new FileStream(vParts[0] + vParts[1] + vParts[2] + "_m4a.bat", FileMode.Create)) {
                 using (StreamWriter sw = new StreamWriter(fs, Encoding.Default)) {
+                    sw.WriteLine("cd /D \"" + Global.ph + "\"");
                     for (int i = 1; i <= num; i++) {
                         sw.WriteLine(@"ffmpeg -i """ + aParts[0] + aParts[1] + i.ToString("D2") + aParts[2] + aParts[3] +
                             @""" -f wav - | neroaacenc -q " + q + @" -if - -ignorelength -of """
@@ -67,8 +68,9 @@ namespace Video_for_G1
             }
 
             //mux
-            using (FileStream fs = new FileStream(Global.ph + vParts[1] + vParts[2] + "_mux.bat", FileMode.Create)) {
+            using (FileStream fs = new FileStream(vParts[0] + vParts[1] + vParts[2] + "_mux.bat", FileMode.Create)) {
                 using (StreamWriter sw = new StreamWriter(fs, Encoding.Default)) {
+                    sw.WriteLine("cd /D \"" + Global.ph + "\"");
                     for (int i = 1; i <= num; i++) {
                         sw.WriteLine(@"ffmpeg -i """ + vParts[0] + vParts[1] + i.ToString("D2") + vParts[2] + @"v.mp4"" -i """
                             + vParts[0] + vParts[1] + i.ToString("D2") + vParts[2] + @".m4a"" -vcodec copy -acodec copy """
@@ -110,7 +112,7 @@ namespace Video_for_G1
 
         private void textBoxAudio_DragDrop(object sender, DragEventArgs e) {
             string[] stringTemp = (string[])e.Data.GetData(DataFormats.FileDrop);
-            textBoxAudio.Text = stringTemp[0];        
+            textBoxAudio.Text = stringTemp[0];
         }
 
         private void textBoxSubtitle_DragEnter(object sender, DragEventArgs e) {
