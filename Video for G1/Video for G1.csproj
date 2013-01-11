@@ -113,6 +113,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Changelog.txt" />
     <Content Include="ffmpeg.exe" />
     <Content Include="logo.ico" />
     <Content Include="neroAacEnc.exe" />

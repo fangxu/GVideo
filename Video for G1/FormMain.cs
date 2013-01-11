@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.IO;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Video_for_G1
 {
@@ -47,6 +48,14 @@ namespace Video_for_G1
             if (textBoxOptions.Text == "") {
                 textBoxOptions.Text = "--tune animation --crf 23";
             }
+            initTitle();
+        }
+
+        private void initTitle() {
+            AssemblyName info = Assembly.GetExecutingAssembly().GetName();
+            this.Text = info.Name + " - " + info.Version.Major
+                + "." + info.Version.Minor
+                + "." + info.Version.Build;
         }
 
         /************************************************************************/
@@ -173,7 +182,8 @@ namespace Video_for_G1
                     v.setStatus(Status.done);
                     updateListView();
                 }
-                changeTitle("Video for G1");
+                //changeTitle("Video for G1");
+                initTitle();
                 afterEncode();
             });
             t.IsBackground = true;
