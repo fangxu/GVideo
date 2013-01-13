@@ -5,13 +5,15 @@ using System.Text;
 
 using System.IO;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace Video_for_G1
 {
     public static class FileService
     {
         static String[] exeFile = new String[] { "x264.exe", "ffmpeg.exe", "neroAacEnc.exe" };
-        static String[] extractExeFile = new String[] { "mkvextract.exe", "mkvinfo.exe" };
+        static String[] mkvExeFile = new String[] { "mkvextract.exe", "mkvinfo.exe" };
+        const String reFileNamePatternFile = "ReFileName.txt";
         public static bool checkExe() {
             for (int i = 0; i < 3; i++) {
                 string exePath = Global.ph + exeFile[i];
@@ -22,17 +24,48 @@ namespace Video_for_G1
             }
             bool hasExtract = true;
             for (int i = 0; i < 2; i++) {
-                string exePath = Global.ph + extractExeFile[i];
+                string exePath = Global.ph + mkvExeFile[i];
                 if (!File.Exists(exePath)) {
-                    MessageBox.Show(extractExeFile[i] + " not exist!", "Extract can not work!");
+                    MessageBox.Show(mkvExeFile[i] + " not exist!", "Extract can not work!");
                     hasExtract = false;
                 }
             }
             return hasExtract;
         }
 
+        public static List<String> getReFileNamePattern() {
+            if (!File.Exists(reFileNamePatternFile)) {
+                File.CreateText(reFileNamePatternFile);
+                return null;
+            }
+            List<String> pattens = new List<String>();
+            using (StreamReader sr = new StreamReader(reFileNamePatternFile)) {
+                while (!sr.EndOfStream) {
+                    pattens.Add(sr.ReadLine());
+                }
+            }
+            return pattens;
+        }
+
+        public static void reFileName(String file) {
+            if (!File.Exists(file)) {
+                return;
+            }
+            List<String> patterns = getReFileNamePattern();
+            if (patterns == null || patterns.Count == 0) {
+                return;
+            }
+            String[] fileParts = Global.SplitFilePathName(file);
+            String filePath = fileParts[0];
+            String fileName = fileParts[4];
+            String newFileName = fileName;
+            foreach (String pattern in patterns) {
+                newFileName = Regex.Replace(newFileName, pattern, "");
+            }
+            File.Move(filePath + fileName, filePath + newFileName);
+        }
         //--tune animation --crf 23
-        public static void createBat(String pathFile, String options, String output) {
+        public static String createBat(String pathFile, String options, String output) {
             String pathName = " \"" + output + pathFile.Substring(pathFile.LastIndexOf('\\'),
                 pathFile.LastIndexOf('.') - pathFile.LastIndexOf('\\'));
             bool isAvs = pathFile.EndsWith(".avs");
@@ -64,6 +97,9 @@ namespace Video_for_G1
                     sw.Write(sBuilder.ToString());
                 }
             }
+            String outFile = avo.Substring(2);
+            outFile = outFile.Remove(outFile.LastIndexOf('\"'));
+            return outFile;
         }
 
         internal static void deleteBat() {

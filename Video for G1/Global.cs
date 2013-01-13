@@ -22,15 +22,19 @@ namespace Video_for_G1
         }
 
         public static String[] SplitFilePathName(String fileString) {
-            String[] result = new String[4];
-            Match m = Regex.Match(fileString, @"([\s\S]+\\)([\s\S]*?\[)\d{2}(][\s\S]*?)(\.[\S]*)$");
+            String[] result = new String[5];
+            Match m = Regex.Match(fileString, @"([\s\S]+\\)(([\s\S]*?\[)\d{2}(][\s\S]*?)(\.[\S]*))$");
             if (!m.Success) {
                 return null;
             }
+            //path
             result[0] = m.Groups[1].Value;
-            result[1] = m.Groups[2].Value;
-            result[2] = m.Groups[3].Value;
-            result[3] = m.Groups[4].Value;
+            //three parts of name
+            result[1] = m.Groups[3].Value;
+            result[2] = m.Groups[4].Value;
+            result[3] = m.Groups[5].Value;
+            //name
+            result[4] = m.Groups[2].Value;
             return result;
         }
     }

@@ -20,12 +20,12 @@ namespace Video_for_G1
         HashSet<VideoItem> videos;
         //压制完成后的动作
         AfterDone afterDone;
-
         //Extract窗口
         Extract extract;
-
         //Bat窗口
         Bat bat;
+
+        #region 构造函数
 
         public FormMain() {
             //初始化数据
@@ -35,8 +35,8 @@ namespace Video_for_G1
             //检查x264.exe,ffmpeg.exe,neroaacenc.exe三个文件是否存在
             //mkvextract.exe和mkvinfo.exe不存在是提示Extract功能不可用
             FileService.checkExe();
-            //默认置顶
-            checkBoxTop.Checked = true;
+            //默认不置顶
+            checkBoxTop.Checked = false;
             this.TopMost = true;
             //添加完成后选项，默认nothing
             comboBoxAfterDone.Items.AddRange(new String[] {
@@ -50,69 +50,9 @@ namespace Video_for_G1
             }
             initTitle();
         }
+        #endregion
 
-        private void initTitle() {
-            AssemblyName info = Assembly.GetExecutingAssembly().GetName();
-            this.Text = info.Name + " - " + info.Version.Major
-                + "." + info.Version.Minor
-                + "." + info.Version.Build;
-        }
-
-        /************************************************************************/
-        /* 视频文件拖入窗体                                                     */
-        /************************************************************************/
-        private void FormMain_DragEnter(object sender, DragEventArgs e) {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                e.Effect = DragDropEffects.Copy;
-        }
-
-        /************************************************************************/
-        /* 视频文件在窗体内释放，添加到videos中                                 */
-        /************************************************************************/
-        private void FormMain_DragDrop(object sender, DragEventArgs e) {
-            string[] stringTemp = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (textBoxOutput.Text == "") {
-                textBoxOutput.Text = stringTemp[0].Substring(0, stringTemp[0].LastIndexOf('\\'));
-            }
-            for (int i = 0; i < stringTemp.Length; i++) {
-                videos.Add(new VideoItem(stringTemp[i]));
-            }
-            updateListView();
-        }
-
-        /************************************************************************/
-        /* 刷新列表                                                             */
-        /************************************************************************/
-        public void updateListView() {
-            if (this.InvokeRequired) {
-                this.BeginInvoke(new MethodInvoker(() =>
-                {
-                    listView.Items.Clear();
-                    foreach (VideoItem vi in videos) {
-                        ListViewItem it = new ListViewItem();
-                        it.Text = vi.getName();
-                        it.SubItems.Add(vi.getStatus().ToString());
-                        listView.Items.Add(it);
-                    }
-                    if (videos.Count != 0) {
-                        listView.Columns[0].Width = -1;
-                    }
-                }));
-            } else {
-                listView.Items.Clear();
-                foreach (VideoItem vi in videos) {
-                    ListViewItem it = new ListViewItem();
-                    it.Text = vi.getName();
-                    it.SubItems.Add(vi.getStatus().ToString());
-                    listView.Items.Add(it);
-                }
-                if (videos.Count != 0) {
-                    listView.Columns[0].Width = -1;
-                }
-            }
-
-        }
-
+        #region 按键响应
         /************************************************************************/
         /* 清空按钮响应                                                         */
         /************************************************************************/
@@ -167,7 +107,7 @@ namespace Video_for_G1
                     v.setStatus(Status.processing);
                     updateListView();
 
-                    FileService.createBat(v.getPath(), options, output);
+                    String outFile = FileService.createBat(v.getPath(), options, output);
                     Process p = new Process();
                     p.StartInfo.FileName = "\"" + Global.batPh + "\"";
                     p.StartInfo.RedirectStandardError = true;
@@ -181,72 +121,16 @@ namespace Video_for_G1
                     p.Dispose();
                     v.setStatus(Status.done);
                     updateListView();
+                    if (checkBoxReName.Checked) {
+                        FileService.reFileName(outFile);
+                    }
+
                 }
-                //changeTitle("Video for G1");
                 initTitle();
                 afterEncode();
             });
             t.IsBackground = true;
             t.Start();
-        }
-
-        /************************************************************************/
-        /* 完成后动作判断                                                       */
-        /************************************************************************/
-        private void afterEncode() {
-            switch (afterDone) {
-                case AfterDone.nothing:
-                    break;
-                case AfterDone.close:
-                    Environment.Exit(0);
-                    break;
-                case AfterDone.shutdown:
-                    Process bootProcess = new Process();
-                    bootProcess.StartInfo.FileName = "shutdown";
-                    bootProcess.StartInfo.Arguments = "/s";
-                    bootProcess.Start();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        /************************************************************************/
-        /* 异步显示压制信息                                                     */
-        /************************************************************************/
-        private void Output(object sendProcess, DataReceivedEventArgs output) {
-            if (String.IsNullOrEmpty(output.Data)) return;
-            changeTitle(output.Data);
-        }
-
-        /************************************************************************/
-        /* 置顶选项选择响应                                                     */
-        /************************************************************************/
-        private void checkBoxTop_CheckedChanged(object sender, EventArgs e) {
-            this.TopMost = checkBoxTop.Checked;
-        }
-
-        /************************************************************************/
-        /* 完成后选项选择响应                                                   */
-        /************************************************************************/
-        private void comboBoxAfterDone_SelectedIndexChanged(object sender, EventArgs e) {
-            afterDone = (AfterDone)comboBoxAfterDone.SelectedIndex;
-        }
-
-        /************************************************************************/
-        /* 更改窗体标题，用于显示压制信息                                       */
-        /************************************************************************/
-        public void changeTitle(String title) {
-
-            if (this.InvokeRequired) {
-                this.BeginInvoke(new MethodInvoker(() =>
-                            {
-                                this.Text = title;
-
-                            }));
-            } else {
-                this.Text = title;
-            }
         }
 
         /************************************************************************/
@@ -256,15 +140,7 @@ namespace Video_for_G1
             new HelpX264().Show();
         }
 
-        /************************************************************************/
-        /* 关闭前保存配置信息                                                   */
-        /************************************************************************/
-        private void FormMain_FormClosed(object sender, FormClosedEventArgs e) {
-            FileService.deleteBat();
-            Properties.Settings.Default.MainForm_Args = textBoxOptions.Text;
-            Properties.Settings.Default.MainForm_Output = textBoxOutput.Text;
-            Properties.Settings.Default.Save();
-        }
+
 
         /************************************************************************/
         /* 打开Bat窗口                                                          */
@@ -310,6 +186,57 @@ namespace Video_for_G1
             }
         }
 
+        #endregion
+
+
+        #region 事件响应
+
+        /************************************************************************/
+        /* 视频文件拖入窗体                                                     */
+        /************************************************************************/
+        private void FormMain_DragEnter(object sender, DragEventArgs e) {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+        }
+
+        /************************************************************************/
+        /* 视频文件在窗体内释放，添加到videos中                                 */
+        /************************************************************************/
+        private void FormMain_DragDrop(object sender, DragEventArgs e) {
+            string[] stringTemp = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (textBoxOutput.Text == "") {
+                textBoxOutput.Text = stringTemp[0].Substring(0, stringTemp[0].LastIndexOf('\\'));
+            }
+            for (int i = 0; i < stringTemp.Length; i++) {
+                videos.Add(new VideoItem(stringTemp[i]));
+            }
+            updateListView();
+        }
+
+        /************************************************************************/
+        /* 置顶选项选择响应                                                     */
+        /************************************************************************/
+        private void checkBoxTop_CheckedChanged(object sender, EventArgs e) {
+            this.TopMost = checkBoxTop.Checked;
+        }
+
+        /************************************************************************/
+        /* 完成后选项选择响应                                                   */
+        /************************************************************************/
+        private void comboBoxAfterDone_SelectedIndexChanged(object sender, EventArgs e) {
+            afterDone = (AfterDone)comboBoxAfterDone.SelectedIndex;
+        }
+
+        /************************************************************************/
+        /* 关闭前保存配置信息                                                   */
+        /************************************************************************/
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e) {
+            FileService.deleteBat();
+            Properties.Settings.Default.MainForm_Args = textBoxOptions.Text;
+            Properties.Settings.Default.MainForm_Output = textBoxOutput.Text;
+            Properties.Settings.Default.Save();
+        }
+
         /************************************************************************/
         /* 移动主窗口事件，使Bat和Extract窗口跟随移动。                         */
         /************************************************************************/
@@ -344,5 +271,103 @@ namespace Video_for_G1
                 f2.SetDesktopLocation(this.Location.X + this.Width, this.Location.Y + f1.Height);
             }
         }
+        #endregion
+
+        #region 功能函数
+
+        private void initTitle() {
+            AssemblyName info = Assembly.GetExecutingAssembly().GetName();
+            String title = info.Name + " - " + info.Version.Major
+                + "." + info.Version.Minor
+                + "." + info.Version.Build;
+            if (this.InvokeRequired) {
+                this.BeginInvoke(new MethodInvoker(() =>
+                {
+                    this.Text = title;
+
+                }));
+            } else {
+                this.Text = title;
+            }
+        }
+
+        /************************************************************************/
+        /* 刷新列表                                                             */
+        /************************************************************************/
+        public void updateListView() {
+            if (this.InvokeRequired) {
+                this.BeginInvoke(new MethodInvoker(() =>
+                {
+                    listView.Items.Clear();
+                    foreach (VideoItem vi in videos) {
+                        ListViewItem it = new ListViewItem();
+                        it.Text = vi.getName();
+                        it.SubItems.Add(vi.getStatus().ToString());
+                        listView.Items.Add(it);
+                    }
+                    if (videos.Count != 0) {
+                        listView.Columns[0].Width = -1;
+                    }
+                }));
+            } else {
+                listView.Items.Clear();
+                foreach (VideoItem vi in videos) {
+                    ListViewItem it = new ListViewItem();
+                    it.Text = vi.getName();
+                    it.SubItems.Add(vi.getStatus().ToString());
+                    listView.Items.Add(it);
+                }
+                if (videos.Count != 0) {
+                    listView.Columns[0].Width = -1;
+                }
+            }
+
+        }
+
+        /************************************************************************/
+        /* 更改窗体标题，用于显示压制信息                                       */
+        /************************************************************************/
+        public void changeTitle(String title) {
+
+            if (this.InvokeRequired) {
+                this.BeginInvoke(new MethodInvoker(() =>
+                            {
+                                this.Text = title;
+
+                            }));
+            } else {
+                this.Text = title;
+            }
+        }
+
+        /************************************************************************/
+        /* 完成后动作判断                                                       */
+        /************************************************************************/
+        private void afterEncode() {
+            switch (afterDone) {
+                case AfterDone.nothing:
+                    break;
+                case AfterDone.close:
+                    Environment.Exit(0);
+                    break;
+                case AfterDone.shutdown:
+                    Process bootProcess = new Process();
+                    bootProcess.StartInfo.FileName = "shutdown";
+                    bootProcess.StartInfo.Arguments = "/s";
+                    bootProcess.Start();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /************************************************************************/
+        /* 异步显示压制信息                                                     */
+        /************************************************************************/
+        private void Output(object sendProcess, DataReceivedEventArgs output) {
+            if (String.IsNullOrEmpty(output.Data)) return;
+            changeTitle(output.Data);
+        }
+        #endregion
     }
 }

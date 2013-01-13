@@ -46,6 +46,7 @@
             this.textBoxOptions = new System.Windows.Forms.TextBox();
             this.buttonBat = new System.Windows.Forms.Button();
             this.buttonExtract = new System.Windows.Forms.Button();
+            this.checkBoxReName = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // listView
@@ -141,16 +142,16 @@
             // 
             this.comboBoxAfterDone.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAfterDone.FormattingEnabled = true;
-            this.comboBoxAfterDone.Location = new System.Drawing.Point(336, 224);
+            this.comboBoxAfterDone.Location = new System.Drawing.Point(306, 223);
             this.comboBoxAfterDone.Name = "comboBoxAfterDone";
-            this.comboBoxAfterDone.Size = new System.Drawing.Size(121, 20);
+            this.comboBoxAfterDone.Size = new System.Drawing.Size(75, 20);
             this.comboBoxAfterDone.TabIndex = 9;
             this.comboBoxAfterDone.SelectedIndexChanged += new System.EventHandler(this.comboBoxAfterDone_SelectedIndexChanged);
             // 
             // checkBoxTop
             // 
             this.checkBoxTop.AutoSize = true;
-            this.checkBoxTop.Location = new System.Drawing.Point(463, 226);
+            this.checkBoxTop.Location = new System.Drawing.Point(463, 224);
             this.checkBoxTop.Name = "checkBoxTop";
             this.checkBoxTop.Size = new System.Drawing.Size(42, 16);
             this.checkBoxTop.TabIndex = 10;
@@ -163,9 +164,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(265, 228);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.Size = new System.Drawing.Size(35, 12);
             this.label3.TabIndex = 11;
-            this.label3.Text = "AfterDone:";
+            this.label3.Text = "Done:";
             // 
             // buttonHelp
             // 
@@ -205,12 +206,23 @@
             this.buttonExtract.UseVisualStyleBackColor = true;
             this.buttonExtract.Click += new System.EventHandler(this.buttonExtract_Click);
             // 
+            // checkBoxReName
+            // 
+            this.checkBoxReName.AutoSize = true;
+            this.checkBoxReName.Location = new System.Drawing.Point(397, 225);
+            this.checkBoxReName.Name = "checkBoxReName";
+            this.checkBoxReName.Size = new System.Drawing.Size(60, 16);
+            this.checkBoxReName.TabIndex = 15;
+            this.checkBoxReName.Text = "ReName";
+            this.checkBoxReName.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(517, 307);
+            this.Controls.Add(this.checkBoxReName);
             this.Controls.Add(this.buttonExtract);
             this.Controls.Add(this.buttonBat);
             this.Controls.Add(this.buttonHelp);
@@ -257,6 +269,7 @@
         public System.Windows.Forms.TextBox textBoxOptions;
         private System.Windows.Forms.Button buttonBat;
         private System.Windows.Forms.Button buttonExtract;
+        private System.Windows.Forms.CheckBox checkBoxReName;
     }
 }
 

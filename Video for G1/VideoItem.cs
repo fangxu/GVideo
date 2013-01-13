@@ -46,6 +46,7 @@ namespace Video_for_G1
             status = s;
         }
 
+
         public VideoItem(String path)
         {
             if (path.Contains('\\'))
