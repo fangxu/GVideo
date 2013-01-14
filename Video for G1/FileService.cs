@@ -87,7 +87,7 @@ namespace Video_for_G1
                     + (isAvs ? "" : "--vf resize:480,320,,both,,spline")
                     + " -o " + vo + vi);
                 if (!isAvs) {
-                    sBuilder.AppendLine("ffmpeg -i " + vi + " -f wav - | neroaacenc -q 0.28 -if - -ignorelength -of " + ao);
+                    sBuilder.AppendLine("ffmpeg -i " + vi + " -ar 48000 -f wav - | neroaacenc -q 0.28 -if - -ignorelength -of " + ao);
                     sBuilder.AppendLine("ffmpeg -i " + vo + " -i " + ao + " -vcodec copy -acodec copy " + avo);
                     sBuilder.AppendLine("del " + vo);
                     sBuilder.AppendLine("del " + ao);

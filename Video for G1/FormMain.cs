@@ -37,7 +37,7 @@ namespace Video_for_G1
             FileService.checkExe();
             //默认不置顶
             checkBoxTop.Checked = false;
-            this.TopMost = true;
+            this.TopMost = false;
             //添加完成后选项，默认nothing
             comboBoxAfterDone.Items.AddRange(new String[] {
                 AfterDone.nothing.ToString(),AfterDone.close.ToString(),AfterDone.shutdown.ToString() });
