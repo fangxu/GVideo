@@ -93,6 +93,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SynonymComparer.cs" />
+    <Compile Include="VideoInfo.cs" />
     <Compile Include="VideoItem.cs" />
     <EmbeddedResource Include="Bat.resx">
       <DependentUpon>Bat.cs</DependentUpon>

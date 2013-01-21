@@ -303,6 +303,7 @@ namespace Video_for_G1
                         ListViewItem it = new ListViewItem();
                         it.Text = vi.getName();
                         it.SubItems.Add(vi.getStatus().ToString());
+                        it.SubItems.Add(vi.BitRate.ToString());
                         listView.Items.Add(it);
                     }
                     if (videos.Count != 0) {
@@ -315,6 +316,7 @@ namespace Video_for_G1
                     ListViewItem it = new ListViewItem();
                     it.Text = vi.getName();
                     it.SubItems.Add(vi.getStatus().ToString());
+                    it.SubItems.Add(vi.BitRate.ToString());
                     listView.Items.Add(it);
                 }
                 if (videos.Count != 0) {

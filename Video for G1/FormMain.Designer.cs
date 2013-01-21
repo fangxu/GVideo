@@ -47,13 +47,15 @@
             this.buttonBat = new System.Windows.Forms.Button();
             this.buttonExtract = new System.Windows.Forms.Button();
             this.checkBoxReName = new System.Windows.Forms.CheckBox();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView
             // 
             this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
-            this.columnHeader2});
+            this.columnHeader2,
+            this.columnHeader3});
             this.listView.Dock = System.Windows.Forms.DockStyle.Top;
             this.listView.FullRowSelect = true;
             this.listView.GridLines = true;
@@ -216,6 +218,10 @@
             this.checkBoxReName.Text = "ReName";
             this.checkBoxReName.UseVisualStyleBackColor = true;
             // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Bit Rate";
+            // 
             // FormMain
             // 
             this.AllowDrop = true;
@@ -270,6 +276,7 @@
         private System.Windows.Forms.Button buttonBat;
         private System.Windows.Forms.Button buttonExtract;
         private System.Windows.Forms.CheckBox checkBoxReName;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }
 

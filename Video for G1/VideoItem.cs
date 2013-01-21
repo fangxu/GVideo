@@ -25,40 +25,37 @@ namespace Video_for_G1
         private String name;
         private String path;
         private Status status;
+        double bitRate;
+        public double BitRate {
+            get { return bitRate; }
+        }
 
-        public String getName()
-        {
+        public String getName() {
             return name;
         }
 
-        public String getPath()
-        {
+        public String getPath() {
             return path;
         }
 
-        public Status getStatus()
-        {
+        public Status getStatus() {
             return status;
         }
 
-        public void setStatus(Status s)
-        {
+        public void setStatus(Status s) {
             status = s;
         }
 
 
-        public VideoItem(String path)
-        {
-            if (path.Contains('\\'))
-            {
+        public VideoItem(String path) {
+            if (path.Contains('\\')) {
                 this.path = path;
                 this.name = path.Substring(path.LastIndexOf('\\') + 1, path.Length - path.LastIndexOf('\\') - 1);
-            }
-            else
-            {
+            } else {
                 this.name = path;
             }
-
+            VideoInfo vf = new VideoInfo(path);
+            this.bitRate = vf.BitRate;
         }
     }
 }
