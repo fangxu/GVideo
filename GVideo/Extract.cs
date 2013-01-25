@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
-namespace Video_for_G1
+namespace GVideo
 {
     public partial class Extract : Form
     {

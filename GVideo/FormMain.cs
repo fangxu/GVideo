@@ -12,7 +12,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace Video_for_G1
+namespace GVideo
 {
     public partial class FormMain : Form
     {

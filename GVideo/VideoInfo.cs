@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 
-namespace Video_for_G1
+namespace GVideo
 {
     class VideoInfo
     {

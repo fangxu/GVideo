@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Video_for_G1
+namespace GVideo
 {
     class Global
     {

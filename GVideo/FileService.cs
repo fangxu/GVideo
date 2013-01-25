@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using System.IO;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
-namespace Video_for_G1
+namespace GVideo
 {
     public static class FileService
     {
