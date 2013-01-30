@@ -25,9 +25,18 @@ namespace GVideo
         private String name;
         private String path;
         private Status status;
-        double bitRate;
+        private VideoInfo vf;
+
+        public int Width {
+            get { return vf.Width; }
+        }
+
+        public int Heigth {
+            get { return vf.Height; }
+        }
+        
         public double BitRate {
-            get { return bitRate; }
+            get { return vf.BitRate; }
         }
 
         public String getName() {
@@ -54,8 +63,8 @@ namespace GVideo
             } else {
                 this.name = path;
             }
-            VideoInfo vf = new VideoInfo(path);
-            this.bitRate = vf.BitRate;
+            vf = new VideoInfo(path);
+            //this.bitRate = vf.BitRate;
         }
     }
 }

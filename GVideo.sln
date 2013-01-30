@@ -7,10 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{74BDF3B8-8A3E-47C0-8359-3BD9A615D4DD}"
 	ProjectSection(SolutionItems) = preProject
+		GVideo.vsmdi = GVideo.vsmdi
 		Local.testsettings = Local.testsettings
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-		GVideo.vsmdi = GVideo.vsmdi
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XVideo", "XVideo\XVideo.csproj", "{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -45,6 +47,16 @@ Global
 		{3146BACC-F4E4-42ED-9D5C-D8FC1814C9DF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3146BACC-F4E4-42ED-9D5C-D8FC1814C9DF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3146BACC-F4E4-42ED-9D5C-D8FC1814C9DF}.Release|x86.ActiveCfg = Release|Any CPU
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Debug|x86.ActiveCfg = Debug|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Debug|x86.Build.0 = Debug|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Release|Any CPU.ActiveCfg = Release|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Release|Mixed Platforms.Build.0 = Release|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Release|x86.ActiveCfg = Release|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

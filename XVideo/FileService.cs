@@ -6,7 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
-namespace GVideo
+namespace XVideo
 {
     public static class FileService
     {
@@ -64,7 +64,8 @@ namespace GVideo
             File.Move(filePath + fileName, filePath + newFileName);
         }
         //--tune animation --crf 23
-        public static String createBat(String pathFile, String options, String output) {
+        public static String createBat(GVideo.VideoItem v, String options, String output) {
+            String pathFile=v.getPath();
             String pathName = " \"" + output + pathFile.Substring(pathFile.LastIndexOf('\\'),
                 pathFile.LastIndexOf('.') - pathFile.LastIndexOf('\\'));
             bool isAvs = pathFile.EndsWith(".avs");
@@ -81,12 +82,12 @@ namespace GVideo
                 File.Copy(pathFile, Global.batPh, true);
             } else {
                 StringBuilder sBuilder = new StringBuilder();
-                sBuilder.AppendLine("x264 --profile baseline --level 3 " + options
-                    + " --vbv-bufsize 2500 --vbv-maxrate 2500 "
-                    + (isAvs ? "" : "--vf resize:480,320,,both,,spline")
+                sBuilder.AppendLine("x264 " + " --level 4.1 " + options
+                    + "  "
+                    + (v.Width<1280 ? "" : "--vf resize:1280,720,,both,,spline")
                     + " -o " + vo + vi);
                 if (!isAvs) {
-                    sBuilder.AppendLine("ffmpeg -i " + vi + " -ar 48000 -ac 2 -f wav - | neroaacenc -q 0.28 -if - -ignorelength -of " + ao);
+                    sBuilder.AppendLine("ffmpeg -i " + vi + " -f wav - | neroaacenc -q 0.30 -if - -ignorelength -of " + ao);
                     sBuilder.AppendLine("ffmpeg -i " + vo + " -i " + ao + " -vcodec copy -acodec copy " + avo);
                     sBuilder.AppendLine("del " + vo);
                     sBuilder.AppendLine("del " + ao);
