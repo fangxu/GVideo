@@ -99,6 +99,8 @@ namespace GVideo
 
             Thread t = new Thread(() =>
             {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
                 for (; ; ) {
                     v = videos.FirstOrDefault(x => x.getStatus() == Status.waitting);
                     if (v == null) {
@@ -126,7 +128,8 @@ namespace GVideo
                     }
 
                 }
-                initTitle();
+                sw.Stop();                
+                initTitle(sw.Elapsed.ToString());
                 afterEncode();
             });
             t.IsBackground = true;
@@ -275,16 +278,16 @@ namespace GVideo
 
         #region 功能函数
 
-        private void initTitle() {
+        private void initTitle(String subtitle = "") {
             AssemblyName info = Assembly.GetExecutingAssembly().GetName();
             String title = info.Name + " - " + info.Version.Major
                 + "." + info.Version.Minor
-                + "." + info.Version.Build;
+                + "." + info.Version.Build
+                + (subtitle != "" ? " {" + subtitle + "}" : "");
             if (this.InvokeRequired) {
                 this.BeginInvoke(new MethodInvoker(() =>
                 {
                     this.Text = title;
-
                 }));
             } else {
                 this.Text = title;
