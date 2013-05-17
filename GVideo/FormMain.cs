@@ -378,7 +378,7 @@ namespace GVideo
             if (info.StartsWith("["))
                 info = parserX264Info(info);
             else if (info.StartsWith("size"))
-                info = parserFfmpegInfo(info);
+                info = parserFfmpegWavInfo(info);
             else if (info.StartsWith("frame="))
                 info = parserFfmpegMuxInfo(info);
             else return;
@@ -390,7 +390,7 @@ namespace GVideo
             return result;
         }
 
-        private String parserFfmpegInfo(String info) {
+        private String parserFfmpegWavInfo(String info) {
             String result = info;
             return result;
         }
