@@ -369,9 +369,35 @@ namespace GVideo
         /************************************************************************/
         /* 异步显示压制信息                                                     */
         /************************************************************************/
+        //[10.9%]123214/535235 frames,
+        //size = 
+        //Processed 1000 seconds
         private void Output(object sendProcess, DataReceivedEventArgs output) {
             if (String.IsNullOrEmpty(output.Data)) return;
-            changeTitle(output.Data);
+            String info = output.Data;
+            if (info.StartsWith("["))
+                info = parserX264Info(info);
+            else if (info.StartsWith("size"))
+                info = parserFfmpegInfo(info);
+            else if (info.StartsWith("frame="))
+                info = parserFfmpegMuxInfo(info);
+            else return;
+            changeTitle(info);
+        }
+
+        private String parserX264Info(String info) {
+            String result = info;
+            return result;
+        }
+
+        private String parserFfmpegInfo(String info) {
+            String result = info;
+            return result;
+        }
+
+        private String parserFfmpegMuxInfo(String info) {
+            String result = info;
+            return result;
         }
         #endregion
     }
