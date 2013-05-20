@@ -45,6 +45,8 @@ namespace GVideo
             //使用上次的配置信息
             textBoxOutput.Text = Properties.Settings.Default.MainForm_Output;
             textBoxOptions.Text = Properties.Settings.Default.MainForm_Args;
+            checkBoxTop.Checked = Properties.Settings.Default.MainForm_Top;
+            checkBoxReName.Checked = Properties.Settings.Default.ReName_Enable;
             if (textBoxOptions.Text == "") {
                 textBoxOptions.Text = "--tune animation --crf 23";
             }
@@ -237,6 +239,8 @@ namespace GVideo
             FileService.deleteBat();
             Properties.Settings.Default.MainForm_Args = textBoxOptions.Text;
             Properties.Settings.Default.MainForm_Output = textBoxOutput.Text;
+            Properties.Settings.Default.MainForm_Top = checkBoxTop.Checked;
+            Properties.Settings.Default.ReName_Enable = checkBoxReName.Checked;
             Properties.Settings.Default.Save();
         }
 

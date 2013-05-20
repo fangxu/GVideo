@@ -1,4 +1,7 @@
-﻿2013-05-17 Version 1.0.7
+﻿2013-05-20 Version 1.0.8
+-退出时保存rename和topmost的值。
+
+2013-05-17 Version 1.0.7
 -在标题栏屏蔽Neroaacenc的信息。
 
 2013-02-21 Version 1.0.6

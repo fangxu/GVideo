@@ -58,5 +58,29 @@ namespace GVideo.Properties {
                 this["Bat_VSFilter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MainForm_Top {
+            get {
+                return ((bool)(this["MainForm_Top"]));
+            }
+            set {
+                this["MainForm_Top"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ReName_Enable {
+            get {
+                return ((bool)(this["ReName_Enable"]));
+            }
+            set {
+                this["ReName_Enable"] = value;
+            }
+        }
     }
 }
