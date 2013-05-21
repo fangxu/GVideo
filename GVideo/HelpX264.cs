@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 using System.Diagnostics;
 
-namespace Video_for_G1
+namespace GVideo
 {
     public partial class HelpX264 : Form
     {

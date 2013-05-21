@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GVideo.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MainForm_Args" Type="System.String" Scope="User">
+      <Value Profile="(Default)">--tune animation --crf 23 --profile baseline --level 3 --vbv-bufsize 2500 --vbv-maxrate 2500 </Value>
+    </Setting>
+    <Setting Name="MainForm_Output" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Bat_VSFilter" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MainForm_Top" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ReName_Enable" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Encode_Size" Type="System.String" Scope="User">
+      <Value Profile="(Default)">480,320</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

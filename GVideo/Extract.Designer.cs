@@ -1,4 +1,4 @@
-﻿namespace Video_for_G1
+﻿namespace GVideo
 {
     partial class Extract
     {

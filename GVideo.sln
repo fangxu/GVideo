@@ -1,20 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Video for G1", "Video for G1\Video for G1.csproj", "{1530C433-728C-46C3-A721-52CDC7422C18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GVideo", "GVideo\GVideo.csproj", "{1530C433-728C-46C3-A721-52CDC7422C18}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{3146BACC-F4E4-42ED-9D5C-D8FC1814C9DF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{74BDF3B8-8A3E-47C0-8359-3BD9A615D4DD}"
 	ProjectSection(SolutionItems) = preProject
+		GVideo.vsmdi = GVideo.vsmdi
 		Local.testsettings = Local.testsettings
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-		Video for G1.vsmdi = Video for G1.vsmdi
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XVideo", "XVideo\XVideo.csproj", "{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Video for G1.vsmdi
+		CategoryFile = GVideo.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,16 @@ Global
 		{3146BACC-F4E4-42ED-9D5C-D8FC1814C9DF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3146BACC-F4E4-42ED-9D5C-D8FC1814C9DF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3146BACC-F4E4-42ED-9D5C-D8FC1814C9DF}.Release|x86.ActiveCfg = Release|Any CPU
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Debug|x86.ActiveCfg = Debug|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Debug|x86.Build.0 = Debug|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Release|Any CPU.ActiveCfg = Release|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Release|Mixed Platforms.Build.0 = Release|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Release|x86.ActiveCfg = Release|x86
+		{2C6067F8-FE31-4986-9EC9-EAB7A4D2D404}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

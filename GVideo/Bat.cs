@@ -9,13 +9,13 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Video_for_G1
+namespace GVideo
 {
     public partial class Bat : Form
     {
         public Bat() {
             InitializeComponent();
-            textBoxVSFilter.Text = Properties.Settings.Default.Bat_VSFilter;
+            textBoxVSFilter.Text = GVideo.Properties.Settings.Default.Bat_VSFilter;
         }
 
         private void buttonCreate_Click(object sender, EventArgs e) {
